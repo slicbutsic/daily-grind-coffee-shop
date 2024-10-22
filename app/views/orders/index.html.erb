@@ -1,0 +1,38 @@
+
+
+<div class="mt-32">
+  order/index....
+  <h1>Your Orders</h1>
+
+<% if @orders.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Order #</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Items</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+          <td><%= number_to_currency(order.total) %></td>
+          <td><%= order.status %></td>
+          <td><%= order.order_items.sum(:quantity) %></td>
+          <td><%= link_to 'View Details', order_path(order) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You haven't placed any orders yet.</p>
+<% end %>
+
+<%= link_to 'Back to Products', products_path %>
+
+</div>

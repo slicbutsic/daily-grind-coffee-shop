@@ -9,6 +9,8 @@ Bundler.require(*Rails.groups)
 module Ecommerce
   class Application < Rails::Application
     config.action_controller.raise_on_missing_callback_actions = false if Rails.version >= "7.1.0"
+    config.assets.precompile += %w( tailwind.css )
+    config.assets.css_compressor = nil
     config.generators do |generate|
       generate.assets false
       generate.helper false

@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "cart_icon_#{product.id}" do %>
+  <%= button_to add_item_cart_path(product_id: product.id),
+                method: :post,
+                class: "text-gray-600 hover:text-gray-800",
+                form_class: "inline-block",
+                data: { turbo_method: :post } do %>
+    <i class="fas fa-shopping-cart cart-icon
+              <%= @cart && @cart.product_in_cart?(product) ? 'text-black hover:text-gray-700' : 'text-gray-400 hover:text-gray-600' %>
+              transition-colors duration-200"
+       data-product-id="<%= product.id %>"></i>
+  <% end %>
+<% end %>

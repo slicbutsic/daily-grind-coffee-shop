@@ -1,0 +1,17 @@
+<div class="flex items-center justify-center mt-3" data-controller="search">
+  <%= form_with url: products_path, method: :get, local: true, data: { search_target: "form" } do |f| %>
+    <%= f.text_field :query,
+      placeholder: "What can we help you find today?",
+      value: params[:query],
+      class: "w-96 px-4 py-1 rounded-full border border-gray-300 text-black afacad",
+      data: {
+        search_target: "input",
+        action: "input->search#submit"
+      },
+      autocomplete: "off"
+    %>
+    <button type="submit" class="px-4 py-1 text-black rounded-r-lg -ml-12">
+      <i class="fas fa-search"></i>
+    </button>
+  <% end %>
+</div>

@@ -1,0 +1,37 @@
+<h1><%= @product.name %></h1>
+<p>Price: <%= number_to_currency(@product.price) %></p>
+
+<p>Average Rating: <%= @product.average_rating %></p>
+<h3>
+  Description: <%= @product.description %>
+</h3>
+<h2>Reviews</h2>
+
+<%= render @product.reviews %>
+
+
+<h3>Add a Review</h3>
+<%= form_with(model: [@product, Review.new], local: true) do |f| %>
+  <div>
+    <%= f.label :rating %>
+    <%= f.select :rating, options_for_select(1..5) %>
+  </div>
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+  <%= f.submit 'Submit Review' %>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= button_to 'Add to Cart', add_item_cart_path(product_id: @product.id), method: :post, class: "btn btn-primary" %>
+<% else %>
+  <span class="text-gray-500">You need to log in to add items to your cart.</span>
+<% end %>
+
+<%= link_to 'Login', new_user_session_path, class: "btn btn-primary" %>
+
+
+<%= button_to 'See Cart', cart_path, method: :get, class: "btn btn-primary" %>
+
+

@@ -1,0 +1,7 @@
+<% if user_signed_in? %>
+  <%= link_to toggle_item_wishlist_path(product), class: added ? "text-red-500" : "text-gray-400 hover:text-red-500", data: { turbo_method: :post } do %>
+    <i class="<%= added ? 'fas' : 'far' %> fa-heart"></i>
+  <% end %>
+<% else %>
+  <%= render 'wishlists/login_prompt', product: product %>
+<% end %>

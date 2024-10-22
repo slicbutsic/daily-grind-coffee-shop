@@ -1,0 +1,15 @@
+
+<h1>Order #<%= @order.id + 10000 %></h1>
+
+<p>Total: <%= number_to_currency(@order.total) %></p>
+<p>Status: <%= @order.status %></p>
+
+<h2>Order Items</h2>
+
+<% @order.order_items.each do |item| %>
+  <div>
+    <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: <%= number_to_currency(item.price) %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Products', products_path %>

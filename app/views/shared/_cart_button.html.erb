@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "cart_button" do %>
+  <button data-action="cart#open" class="hover:bg-white hover:text-black px-2 py-1 rounded transition duration-300 flex items-center">
+    My Basket
+    <% if cart.total_items > 0 %>
+      <span id="cart-count" class="ml-1 bg-[#257A57] text-white rounded-full px-2 py-1 text-xs">
+        <%= cart.total_items %>
+      </span>
+    <% end %>
+  </button>
+<% end %>
