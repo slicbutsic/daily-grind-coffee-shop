@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     post 'toggle/:id', to: 'wishlists#toggle_item', as: 'toggle_item'
     member do
       post 'toggle_item'
+      delete :remove_item
     end
   end
 

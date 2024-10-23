@@ -15,5 +15,7 @@ class Wishlist < ApplicationRecord
     end
   end
 
-
+  def remove_product(product)
+    wishlist_items.find_by(product: product)&.destroy
+  end
 end

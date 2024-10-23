@@ -18,6 +18,26 @@ class WishlistsController < ApplicationController
     end
   end
 
+  def remove_item
+    @product = Product.find(params[:id])
+    @wishlist = current_user.wishlist
+    @wishlist.remove_product(@product)
+
+    respond_to do |format|
+      format.turbo_stream do
+        if @wishlist.products.empty?
+          render turbo_stream: [
+            turbo_stream.remove("wishlist_item_#{@product.id}"),
+            turbo_stream.replace("wishlist_content", partial: 'wishlists/empty_wishlist')
+          ]
+        else
+          render turbo_stream: turbo_stream.remove("wishlist_item_#{@product.id}")
+        end
+      end
+      format.html { redirect_to wishlist_path, notice: 'Product removed from wishlist.' }
+    end
+  end
+
   private
 
   def set_wishlist

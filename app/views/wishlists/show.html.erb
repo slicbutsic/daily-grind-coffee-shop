@@ -1,43 +1,42 @@
 <div class='container mx-auto mt-28 px-5'>
-
-
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
-    <% if @wishlist_products.any? %>
-    <h1 class="afacad text-3xl text-center mb-8">Your Wishlist</h1>
-      <% @wishlist_products.each do |product| %>
-        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden relative">
-          <%= link_to product_path(product), class: "block" do %>
-            <img src="<%= product.image %>" alt="<%= product.name %>" class="w-full h-48 object-cover">
-            <div class="p-4">
-              <h2 class="text-sm font-semibold text-black afacad"><%= product.name %></h2>
-              <div class="flex items-center justify-between mt-1">
-                <p class="text-xs font-bold text-black">
-                  <%= number_to_currency(product.price, unit: "$", format: "%u%n") %>
-                </p>
+  <%= turbo_frame_tag "wishlist_content" do %>
+    <div class="flex flex-col items-center">
+      <% if @wishlist_products.any? %>
+        <h1 class="afacad text-3xl text-center mb-8">Your Wishlist</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center">
+          <% @wishlist_products.each do |product| %>
+            <%= turbo_frame_tag "wishlist_item_#{product.id}" do %>
+              <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden relative w-full max-w-xs">
+                <%= link_to product_path(product), class: "block" do %>
+                  <img src="<%= product.image %>" alt="<%= product.name %>" class="w-full h-48 object-cover">
+                  <div class="p-4">
+                    <h2 class="text-sm font-semibold text-black afacad"><%= product.name %></h2>
+                    <div class="flex items-center justify-between mt-1">
+                      <p class="text-xs font-bold text-black">
+                        <%= number_to_currency(product.price, unit: "$", format: "%u%n") %>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="absolute -bottom-2 right-4 flex space-x-2">
+                  <%= button_to remove_item_wishlist_path(id: product.id), method: :delete, class: "text-red-500 hover:text-red-700" do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                  <%= turbo_frame_tag "cart_icon_#{product.id}" do %>
+                    <%= render 'carts/cart_icon', product: product %>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
-          <div class="absolute -bottom-2 right-4 flex space-x-2">
-            <%= button_to toggle_item_wishlist_path(id: product.id), method: :post, class: "text-red-500 hover:text-red-700" do %>
-              <i class="fas fa-trash"></i>
-            <% end %>
-            <%= turbo_frame_tag "cart_icon_#{product.id}" do %>
-              <%= render 'carts/cart_icon', product: product %>
-            <% end %>
-          </div>
         </div>
+      <% else %>
+        <%= render 'empty_wishlist' %>
       <% end %>
-    <% else %>
-      <div class="col-span-full flex flex-col items-center justify-center space-y-4">
-        <h1 class="text-center text-black font-thin text-3xl mb-3 afacad">Your wishlist is empty...</h1>
-        <%= link_to 'Start Shopping', products_path,
-          class: 'text-center bg-[#257A57] py-3 px-7 rounded text-white inline-block transition duration-300 afacad hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)]'
-        %>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
   <% if @wishlist_products.respond_to?(:total_pages) %>
-    <div class="mt-4">
+    <div class="mt-4 flex justify-center">
       <%= paginate @wishlist_products %>
     </div>
   <% end %>
