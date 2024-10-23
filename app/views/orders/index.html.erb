@@ -33,7 +33,7 @@
                 <p class="text-gray-900 whitespace-no-wrap">#<%= order.id %></p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap"><%= order.created_at.strftime("%B %d, %Y") %></p>
+                <p class="text-gray-900 whitespace-no-wrap"><%= order.created_at.strftime("%d %B %Y") %></p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap"><%= number_to_currency(order.total) %></p>

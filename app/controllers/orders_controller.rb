@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
     @orders = current_user.orders
   end
   def show
-    # The @order is already set by the before_action
   end
 
   private
