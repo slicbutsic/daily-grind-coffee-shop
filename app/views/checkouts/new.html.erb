@@ -1,20 +1,45 @@
-<h1>Checkout</h1>
+<div class="container mx-auto mt-32 px-4"
+     data-controller="stripe-checkout"
+     data-stripe-checkout-publishable-key-value="<%= Rails.configuration.stripe[:publishable_key] %>"
+     data-stripe-checkout-client-secret-value="<%= @client_secret %>">
+  <h1 class="text-2xl font-bold mb-6">Checkout</h1>
 
-<%= form_tag checkouts_path do %>
-  <article>
+  <%= form_for @checkout, url: checkouts_path, html: { id: 'payment-form', class: 'space-y-4', data: { stripe_checkout_target: "form", action: "submit->stripe-checkout#submitForm" } } do |f| %>
     <% if flash[:error].present? %>
-      <div id="error_explanation">
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
         <p><%= flash[:error] %></p>
       </div>
     <% end %>
-    <label class="amount">
-      <span>Amount: <%= number_to_currency(@cart.total_price) %></span>
-    </label>
-  </article>
 
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-description="Purchase all items"
-          data-amount="<%= (@cart.total_price * 100).to_i %>"
-          data-locale="auto"></script>
-<% end %>
+    <div>
+      <h2 class="text-xl font-semibold mb-2">Order Summary</h2>
+      <% @cart.cart_items.each do |item| %>
+        <div class="flex justify-between items-center mb-2">
+          <span><%= item.product.name %> x <%= item.quantity %></span>
+          <span><%= number_to_currency(item.product.price * item.quantity) %></span>
+        </div>
+      <% end %>
+      <div class="font-bold text-lg mt-2">
+        Total: <%= number_to_currency(@cart.total_price) %>
+      </div>
+    </div>
+
+    <div>
+      <label for="card-holder-name" class="block text-sm font-medium text-gray-700">Cardholder Name</label>
+      <input type="text" id="card-holder-name" data-stripe-checkout-target="nameInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Card Details</label>
+      <div data-stripe-checkout-target="cardElement" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style="height: 40px;"></div>
+    </div>
+
+    <div data-stripe-checkout-target="cardErrors" role="alert" class="text-red-600"></div>
+
+    <button data-stripe-checkout-target="submitButton" type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Pay <%= number_to_currency(@cart.total_price) %>
+    </button>
+  <% end %>
+</div>
+
+<%= javascript_include_tag "https://js.stripe.com/v3/", "data-turbo-track": "reload" %>

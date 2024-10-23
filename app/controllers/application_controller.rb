@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :ensure_cart_exists
   before_action :set_categories
   before_action :set_cart
+  include CurrentCart
 
   def resource_name
     :user

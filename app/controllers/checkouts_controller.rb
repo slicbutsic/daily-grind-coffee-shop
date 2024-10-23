@@ -1,51 +1,39 @@
 class CheckoutsController < ApplicationController
+  include CurrentCart
   before_action :set_cart
+  before_action :ensure_cart_isnt_empty, only: [:new]
 
   def new
-    redirect_to root_path, alert: "Your cart is empty." if @cart.cart_items.empty?
+    @checkout = Checkout.new(cart: @cart)
+    @client_secret = @checkout.create_payment_intent
   end
 
   def create
-    @cart = current_user.cart
-    amount = (@cart.total_price * 100).to_i # amount in cents
+    @checkout = Checkout.new(cart: @cart, payment_intent_id: params[:payment_intent_id])
 
     begin
-      customer = Stripe::Customer.create(
-        email: current_user.email,
-        source: params[:stripeToken]
-      )
-
-      charge = Stripe::Charge.create(
-        customer: customer.id,
-        amount: amount,
-        description: 'Rails Stripe customer',
-        currency: 'usd'
-      )
-
-      if charge.paid?
-        order = current_user.orders.create(total: @cart.total_price, status: 'paid')
-        @cart.cart_items.each do |item|
-          order.order_items.create(
-            product: item.product,
-            quantity: item.quantity,
-            price: item.product.price
-          )
-        end
-        @cart.cart_items.destroy_all
-        redirect_to order_path(order), notice: 'Payment successful!'
+      if @checkout.process_payment
+        order = @checkout.create_order(current_user)
+        @cart.destroy
+        session[:cart_id] = nil
+        render json: { success: true, order_id: order.id }
       else
-        redirect_to cart_path, alert: 'Payment failed.'
+        render json: { success: false, error: "Payment processing failed" }, status: :unprocessable_entity
       end
-
-    rescue Stripe::CardError => e
-      redirect_to new_checkout_path, alert: e.message
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Stripe error: #{e.message}"
+      render json: { success: false, error: e.message }, status: :unprocessable_entity
+    rescue => e
+      Rails.logger.error "Payment processing error: #{e.full_message}"
+      render json: { success: false, error: "An unexpected error occurred" }, status: :internal_server_error
     end
   end
 
   private
 
-  def set_cart
-    @cart = current_user.cart
-    redirect_to root_path, alert: "You don't have a cart." unless @cart
+  def ensure_cart_isnt_empty
+    if @cart.cart_items.empty?
+      redirect_to root_path, alert: "Your cart is empty."
+    end
   end
 end

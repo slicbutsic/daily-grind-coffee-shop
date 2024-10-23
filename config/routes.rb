@@ -26,6 +26,6 @@ Rails.application.routes.draw do
   end
 
   # Add these new routes for the cart API and cart item updates
-  get '/api/cart', to: 'carts#api_show'
-  patch '/api/cart_items/:id', to: 'cart_items#update'
+  # get '/api/cart', to: 'carts#api_show'
+  # patch '/api/cart_items/:id', to: 'cart_items#update'
 end
