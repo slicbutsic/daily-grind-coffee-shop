@@ -27,20 +27,22 @@
       </div>
     </div>
 
+    <!-- Cardholder Name -->
     <div>
       <label for="card-holder-name" class="block text-sm font-medium text-gray-700">Cardholder Name</label>
-
-      <input type="text" id="card-holder-name" data-stripe-checkout-target="nameInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+      <input type="text" id="card-holder-name" data-stripe-checkout-target="nameInput" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
     </div>
 
+    <!-- Card Details -->
     <div>
       <label class="block text-sm font-medium text-gray-700">Card Details</label>
-
-      <div data-stripe-checkout-target="cardElement" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style="min-height: 40px;"></div>
+      <div data-stripe-checkout-target="cardElement" style="min-height: 40px;" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></div>
     </div>
 
-    <div data-stripe-checkout-target="cardErrors" role="alert" class="text-red-600"></div>
+    <!-- Error Message -->
+    <div data-stripe-checkout-target="cardErrors" role="alert" class="text-red-600" aria-live="assertive"></div>
 
+    <!-- Submit Button -->
     <button data-stripe-checkout-target="submitButton" type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
       Pay <%= number_to_currency(@cart.total_price) %>
     </button>
