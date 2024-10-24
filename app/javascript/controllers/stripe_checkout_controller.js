@@ -9,41 +9,51 @@ export default class extends Controller {
 
   connect() {
     console.log("Stripe Checkout controller connected")
+    if (typeof Stripe === 'undefined') {
+      console.error("Stripe.js not loaded!")
+      return
+    }
     this.initializeStripe()
   }
 
   initializeStripe() {
     console.log("Initializing Stripe")
-    this.stripe = Stripe(this.publishableKeyValue)
-    const elements = this.stripe.elements()
+    try {
+      this.stripe = Stripe(this.publishableKeyValue)
+      const elements = this.stripe.elements()
 
-    this.card = elements.create('card', {
-      style: {
-        base: {
-          fontSize: '16px',
-          color: '#32325d',
-          '::placeholder': {
-            color: '#aab7c4'
+      this.card = elements.create('card', {
+        style: {
+          base: {
+            fontSize: '16px',
+            color: '#32325d',
+            '::placeholder': {
+              color: '#aab7c4'
+            }
+          },
+          invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
           }
         },
-        invalid: {
-          color: '#fa755a',
-          iconColor: '#fa755a'
+        hidePostalCode: true
+      })
+
+      console.log("Mounting Stripe card element")
+      this.card.mount(this.cardElementTarget)
+      console.log("Stripe card element mounted")
+
+      this.card.on('change', (event) => {
+        if (event.error) {
+          this.showError(event.error.message)
+        } else {
+          this.clearError()
         }
-      },
-      hidePostalCode: true
-    })
-
-    this.card.mount(this.cardElementTarget)
-    console.log("Stripe card element mounted")
-
-    this.card.on('change', (event) => {
-      if (event.error) {
-        this.showError(event.error.message)
-      } else {
-        this.clearError()
-      }
-    })
+      })
+    } catch (error) {
+      console.error("Error initializing Stripe:", error)
+      this.showError("Failed to initialize payment form. Please try again.")
+    }
   }
 
   async submitForm(event) {
@@ -101,7 +111,9 @@ export default class extends Controller {
           payment_intent_id: paymentIntentId
         }),
       })
+
       const result = await response.json()
+
       if (result.success) {
         console.log("Order created successfully")
         window.location.href = `/orders/${result.order_id}`
