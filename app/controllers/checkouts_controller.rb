@@ -6,6 +6,7 @@ class CheckoutsController < ApplicationController
   def new
     @checkout = Checkout.new(cart: @cart)
     @client_secret = @checkout.create_payment_intent
+    Rails.logger.debug "Client Secret: #{@client_secret}"
   end
 
   def create

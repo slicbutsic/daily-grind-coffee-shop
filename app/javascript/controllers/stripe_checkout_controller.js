@@ -9,36 +9,36 @@ export default class extends Controller {
 
   connect() {
     console.log("Stripe Checkout controller connected");
+    console.log("Publishable Key:", this.publishableKeyValue);
+    console.log("Client Secret:", this.clientSecretValue);
 
     if (typeof Stripe === 'undefined') {
-      console.error("Stripe.js not loaded!");
-      return;
+      console.error("Stripe is not defined. Waiting for it to load...");
+      this.waitForStripe();
+    } else {
+      this.initializeStripe();
     }
+  }
 
-    this.initializeStripe();
-
-    // Only initialize on Turbo load if the card hasn't been created yet
-    document.addEventListener('turbo:load', () => {
-      if (!this.card) {
-        this.initializeStripe();
-      }
-    });
+  waitForStripe() {
+    if (typeof Stripe !== 'undefined') {
+      this.initializeStripe();
+    } else {
+      console.log("Stripe still not loaded, retrying in 100ms...");
+      setTimeout(() => this.waitForStripe(), 100);
+    }
   }
 
   initializeStripe() {
-    console.log("Initializing Stripe with key:", this.publishableKeyValue);
+    console.log("Initializing Stripe");
 
     try {
       this.stripe = Stripe(this.publishableKeyValue);
-
-      if (!this.stripe) {
-        throw new Error("Stripe initialization failed: Stripe object not created.");
-      }
+      console.log("Stripe object created:", !!this.stripe);
 
       const elements = this.stripe.elements();
-      console.log("Stripe elements initialized");
+      console.log("Stripe elements created");
 
-      // Create a card element
       this.card = elements.create('card', {
         style: {
           base: {
@@ -56,11 +56,10 @@ export default class extends Controller {
         hidePostalCode: true
       });
 
-      console.log("Mounting Stripe card element");
+      console.log("Card element created, attempting to mount");
       this.card.mount(this.cardElementTarget);
-      console.log("Stripe card element mounted");
+      console.log("Card element mounted successfully");
 
-      // Handle real-time validation errors from the card element
       this.card.on('change', (event) => {
         if (event.error) {
           this.showError(event.error.message);
@@ -69,8 +68,8 @@ export default class extends Controller {
         }
       });
     } catch (error) {
-      console.error("Error initializing Stripe:", error);
-      this.showError("Failed to initialize payment form. Please try again.");
+      console.error("Error in initializeStripe:", error);
+      this.showError(`Failed to initialize payment form: ${error.message}`);
     }
   }
 
@@ -124,7 +123,10 @@ export default class extends Controller {
     try {
       const response = await fetch('/checkouts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
         body: JSON.stringify({ payment_intent_id: paymentIntentId })
       });
 
@@ -144,6 +146,7 @@ export default class extends Controller {
   }
 
   showError(message) {
+    console.error("Showing error:", message);
     this.cardErrorsTarget.textContent = message;
     this.cardErrorsTarget.style.display = 'block';
   }

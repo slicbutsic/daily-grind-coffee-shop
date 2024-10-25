@@ -1,13 +1,21 @@
 <div class='container mx-auto mt-28 px-5' data-controller="login-heart">
   <!-- Render the search form once -->
- 
+
   <div id="product-list">
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
       <% if @products.any? %>
         <% @products.each do |product| %>
           <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden relative">
             <%= link_to product_path(product), class: "block" do %>
+
+
+
               <img src="<%= product.image %>" alt="<%= product.name %>" class="w-full h-48 object-cover">
+
+
+
+
+
               <div class="p-4">
                 <h2 class="text-sm font-semibold text-black afacad"><%= product.name %></h2>
                 <div class="flex items-center justify-between mt-1">

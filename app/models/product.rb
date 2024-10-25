@@ -12,4 +12,5 @@ class Product < ApplicationRecord
     reviews.average(:rating).to_f.round(1)
   end
 
+
 end
