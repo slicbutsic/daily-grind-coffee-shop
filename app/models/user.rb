@@ -21,6 +21,8 @@ class User < ApplicationRecord
 
   private
 
+
+
   def initialize_cart
     create_cart
   end

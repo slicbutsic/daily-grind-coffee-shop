@@ -5,8 +5,8 @@ class CheckoutsController < ApplicationController
   before_action :ensure_address_exists, only: [:new]
 
   def new
-    @checkout = Checkout.new(cart: @cart)
-    @address = current_user.addresses.last
+    @shipping_cost = session[:shipping_cost] || 0
+    @checkout = Checkout.new(cart: @cart, shipping_cost: @shipping_cost)
     @client_secret = @checkout.create_payment_intent
     Rails.logger.debug "Client Secret: #{@client_secret}"
   end

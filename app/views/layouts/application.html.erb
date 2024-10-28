@@ -19,7 +19,7 @@
 </head>
 
   <body>
-    <% unless current_page?(new_user_registration_path) %>
+    <% unless current_page?(new_user_registration_path) || current_page?(confirm_address_path) || current_page?(new_checkout_path) %>
       <%= render 'shared/navbar' %>
     <% end %>
     <main class=" ">

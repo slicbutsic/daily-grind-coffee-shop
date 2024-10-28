@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   get '/confirm_address', to: 'addresses#new'
   post '/confirm_address', to: 'addresses#create'
+  get 'calculate_shipping', to: 'addresses#calculate_shipping'
 
 
   # Add these new routes for the cart API and cart item updates

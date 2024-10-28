@@ -13,3 +13,6 @@ application.register("login", LoginController)
 
 import StripeCheckoutController from "./stripe_checkout_controller"
 application.register("stripe-checkout", StripeCheckoutController)
+
+import ShippingController from "./shipping_controller"
+application.register("shipping", ShippingController)

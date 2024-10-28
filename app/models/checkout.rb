@@ -1,12 +1,12 @@
 class Checkout
   include ActiveModel::Model
 
-  attr_accessor :cart, :payment_intent_id
+  attr_accessor :cart, :payment_intent_id, :shipping_cost
 
   def create_payment_intent
     return false if cart.cart_items.empty?
 
-    amount = (cart.total_price * 100).to_i
+    amount = ((total_with_shipping) * 100).to_i
 
     payment_intent = Stripe::PaymentIntent.create(
       amount: amount,
@@ -33,7 +33,7 @@ class Checkout
     Order.transaction do
       order = Order.create!(
         user: user,
-        total: cart.total_price,
+        total: total_with_shipping,
         status: 'paid'
       )
 
@@ -47,5 +47,11 @@ class Checkout
 
       order
     end
+  end
+
+  private
+
+  def total_with_shipping
+    cart.total_price + (shipping_cost || 0)
   end
 end

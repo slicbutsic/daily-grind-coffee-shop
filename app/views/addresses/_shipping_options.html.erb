@@ -1,0 +1,31 @@
+<h2 class="text-lg font-semibold mb-2 afacad">Shipping Options</h2>
+<div class="space-y-2">
+  <label class="flex items-center">
+    <input type="radio" name="shipping_option" value="normal" checked class="form-radio" data-action="click->shipping#updateTotal">
+    <span class="ml-2 afacad">Normal Shipping:
+      <span data-shipping-target="normalShippingCost"><%= number_to_currency(normal_shipping_cost) %></span>
+    </span>
+  </label>
+
+  <label class="flex items-center afacad">
+    <input type="radio" name="shipping_option" value="fast" class="form-radio" data-action="click->shipping#updateTotal">
+    <span class="ml-2">Fast Shipping:
+      <span data-shipping-target="fastShippingCost"><%= number_to_currency(fast_shipping_cost) %></span>
+    </span>
+  </label>
+</div>
+
+<div class="mt-4">
+  <p class="font-semibold afacad">Total Price (including shipping):
+    <span data-shipping-target="totalPrice">
+      <%= number_to_currency(cart_total + normal_shipping_cost) %>
+    </span>
+  </p>
+</div>
+
+<%= content_tag :div, "", data: {
+  shipping_target: "cartData",
+  cart_total: cart_total,
+  normal_shipping_cost: normal_shipping_cost,
+  fast_shipping_cost: fast_shipping_cost
+} %>

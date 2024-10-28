@@ -14,20 +14,26 @@
       </div>
     <% end %>
 
-    <div>
-      <h2 class="text-xl font-semibold mb-2">Order Summary</h2>
+<div>
+  <h2 class="text-xl font-semibold mb-2">Order Summary</h2>
 
-      <% @cart.cart_items.each do |item| %>
-        <div class="flex justify-between items-center mb-2">
-          <span><%= item.product.name %> x <%= item.quantity %></span>
-          <span><%= number_to_currency(item.product.price * item.quantity) %></span>
-        </div>
-      <% end %>
-
-      <div class="font-bold text-lg mt-2">
-        Total: <%= number_to_currency(@cart.total_price) %>
-      </div>
+  <% @cart.cart_items.each do |item| %>
+    <div class="flex justify-between items-center mb-2">
+      <span><%= item.product.name %> x <%= item.quantity %></span>
+      <span><%= number_to_currency(item.product.price * item.quantity) %></span>
     </div>
+  <% end %>
+
+  <div class="flex justify-between items-center mb-2  text-lg">
+    <span>Shipping:</span>
+    <span><%= number_to_currency(@shipping_cost) %></span>
+  </div>
+
+  <div class="flex justify-between items-center font-bold text-xl mt-2 border-t pt-2">
+    <span>Total:</span>
+    <span><%= number_to_currency(@cart.total_price + @shipping_cost) %></span>
+  </div>
+</div>
 
     <!-- Cardholder Name -->
     <div>
@@ -38,7 +44,7 @@
     <!-- Card Details -->
     <div>
       <label class="block text-sm font-medium text-gray-700">Card Details</label>
-      <div data-stripe-checkout-target="cardElement" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" style="min-height: 40px;"></div>
+      <div data-stripe-checkout-target="cardElement" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" style="min-height: 35px;"></div>
     </div>
 
     <!-- Error Message -->
@@ -46,7 +52,7 @@
 
     <!-- Submit Button -->
     <button data-stripe-checkout-target="submitButton" type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Pay <%= number_to_currency(@cart.total_price) %>
+      Pay <%= number_to_currency(@cart.total_price + @shipping_cost) %>
     </button>
 
   <% end %>
