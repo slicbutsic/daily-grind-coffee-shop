@@ -2,9 +2,11 @@ class CheckoutsController < ApplicationController
   include CurrentCart
   before_action :set_cart
   before_action :ensure_cart_isnt_empty, only: [:new]
+  before_action :ensure_address_exists, only: [:new]
 
   def new
     @checkout = Checkout.new(cart: @cart)
+    @address = current_user.addresses.last
     @client_secret = @checkout.create_payment_intent
     Rails.logger.debug "Client Secret: #{@client_secret}"
   end
@@ -35,6 +37,12 @@ class CheckoutsController < ApplicationController
   def ensure_cart_isnt_empty
     if @cart.cart_items.empty?
       redirect_to root_path, alert: "Your cart is empty."
+    end
+  end
+
+  def ensure_address_exists
+    unless current_user.addresses.exists?
+      redirect_to confirm_address_path, alert: 'Please confirm your address before checkout.'
     end
   end
 end

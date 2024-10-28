@@ -7,8 +7,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  
 
+  has_many :addresses
   has_one :wishlist
   has_many :wishlist_items, through: :wishlist
   has_many :wishlisted_products, through: :wishlist_items, source: :product

@@ -26,6 +26,10 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/confirm_address', to: 'addresses#new'
+  post '/confirm_address', to: 'addresses#create'
+
+
   # Add these new routes for the cart API and cart item updates
   # get '/api/cart', to: 'carts#api_show'
   # patch '/api/cart_items/:id', to: 'cart_items#update'
