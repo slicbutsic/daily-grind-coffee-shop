@@ -18,3 +18,4 @@ export default class extends Controller {
     }, 600) // Match this with the CSS transition time
   }
 }
+

@@ -1,0 +1,10 @@
+<!-- app/views/shared/_profile_dropdown.html.erb -->
+<div data-controller="profile-dropdown" class="relative">
+  <button data-action="click->profile-dropdown#toggle" class="hover:bg-white hover:text-black px-2 py-1 rounded transition duration-300">
+    Profile
+  </button>
+  <div data-profile-dropdown-target="menu" style="display: none; position: absolute; background-color: white; z-index: 100;" class="mt-2 shadow-lg rounded-md w-48">
+    <%= link_to 'Orders', orders_path, class: " block px-4 py-2 text-black hover:bg-gray-200 transition duration-300" %>
+    <%= link_to 'Edit Profile', edit_user_registration_path, class: "block px-4 py-2 text-black hover:bg-gray-200 transition duration-300" %>
+  </div>
+</div>
