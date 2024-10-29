@@ -22,4 +22,8 @@ class ProductsController < ApplicationController
   def set_categories
     @categories = Category.all
   end
+
+  def product_params
+    params.require(:product).permit(:name, :description, :price, :category_id, :image, :intensity)
+  end
 end

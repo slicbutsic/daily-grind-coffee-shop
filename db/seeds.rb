@@ -1,6 +1,9 @@
 puts "destroying database..."
-Category.destroy_all
+CartItem.destroy_all
+Order.destroy_all
+Cart.destroy_all
 Product.destroy_all
+Category.destroy_all
 User.destroy_all
 puts "Starting seed process..."
 
@@ -20,25 +23,25 @@ mugs = Category.create!(name: "Mugs")
 # Create products
 puts "Creating products..."
 Product.create!( [
-   { name: "Arabica Yirgacheffe", description: "Delicate floral and tea-like characteristics with citrus notes.", price: 15.00, image: "images/arabica.jpeg", category: coffee_beans },
-   { name: "Supremo Blend", description: "Well-balanced with a smooth, clean taste and rich aroma.", price: 14.50, image: "images/blend.jpeg", category: coffee_beans },
-   { name: "Brazilian Santos", description: "Full-bodied with a smooth, earthy flavor and low acidity.", price: 16.00, image: "images/brazilian.jpeg", category: coffee_beans },
-   { name: "Colombian Tarrazu", description: "Bright acidity with a full body and hints of chocolate.", price: 15.50, image: "images/colombian.jpeg", category: coffee_beans },
-   { name: "Dark AA", description: "Bold, full-bodied with a wine-like acidity and fruity notes.", price: 17.00, image: "images/dark.jpeg", category: coffee_beans },
-   { name: "Dark Roast", description: "Low acidity with a sweet, nutty flavor and a light body.", price: 13.50, image: "images/dark1.jpeg", category: coffee_beans },
-   { name: "Dark Sumatra", description: "Spicy and full-bodied with a rich, complex flavor.", price: 15.75, image: "images/dark2.jpeg", category: coffee_beans },
-   { name: "Decaf Kona", description: "Smooth, mild with a slightly sweet flavor and floral aroma.", price: 25.00, image: "images/decaf.jpeg", category: coffee_beans },
-   { name: "Espresso Blue Mountain", description: "Mild flavor with no bitterness and a vibrant aroma.", price: 30.00, image: "images/espresso.jpeg", category: coffee_beans },
-   { name: "Ethiopian Sidamo", description: "Light body with a nutty flavor and hints of chocolate.", price: 14.00, image: "images/ethiopian.jpeg", category: coffee_beans },
-   { name: "French Roast", description: "Medium body with a mild, sweet flavor and floral aroma.", price: 14.75, image: "images/french.jpeg", category: coffee_beans },
-   { name: "Guatemala Antigua", description: "Bright acidity with a medium body and wine-like flavor.", price: 16.50, image: "images/guatemalan.jpeg", category: coffee_beans },
-   { name: "Mountain Mysore", description: "Full-bodied with a spicy, intense flavor and low acidity.", price: 15.25, image: "images/mountain.jpeg", category: coffee_beans },
-   { name: "Yemen Mocha", description: "Complex flavor with chocolate and wine notes.", price: 18.00, image: "images/normal.jpeg", category: coffee_beans },
-   { name: "Papua New Guinea", description: "Medium body with a bright, clean taste and fruity notes.", price: 15.50, image: "images/normal1.jpeg", category: coffee_beans },
-   { name: "Korean Robusta", description: "Strong, full-bodied with a harsh flavor and high caffeine content.", price: 12.00, image: "images/normal2.jpeg", category: coffee_beans },
-   { name: "El Salvador Bourbon", description: "Sweet caramel flavor with a crisp, clean finish.", price: 14.25, image: "images/robusta.jpeg", category: coffee_beans },
-   { name: "Single Rwanda Kivu", description: "Bright, clean taste with citrus and floral notes.", price: 16.25, image: "images/single.jpeg", category: coffee_beans },
-   { name: "Vietnamese Toraja", description: "Full-bodied with a rich, earthy flavor and low acidity.", price: 16.75, image: "images/vietnamese.jpeg", category: coffee_beans },
+  { name: "Arabica Yirgacheffe", description: "Delicate floral and tea-like characteristics with citrus notes.", price: 15.00, image: "images/arabica.jpeg", category: coffee_beans, intensity: 4 },
+  { name: "Supremo Blend", description: "Well-balanced with a smooth, clean taste and rich aroma.", price: 14.50, image: "images/blend.jpeg", category: coffee_beans, intensity: 6 },
+  { name: "Brazilian Santos", description: "Full-bodied with a smooth, earthy flavor and low acidity.", price: 16.00, image: "images/brazilian.jpeg", category: coffee_beans, intensity: 5 },
+  { name: "Colombian Tarrazu", description: "Bright acidity with a full body and hints of chocolate.", price: 15.50, image: "images/colombian.jpeg", category: coffee_beans, intensity: 7 },
+  { name: "Dark AA", description: "Bold, full-bodied with a wine-like acidity and fruity notes.", price: 17.00, image: "images/dark.jpeg", category: coffee_beans, intensity: 9 },
+  { name: "Dark Roast", description: "Low acidity with a sweet, nutty flavor and a light body.", price: 13.50, image: "images/dark1.jpeg", category: coffee_beans, intensity: 8 },
+  { name: "Dark Sumatra", description: "Spicy and full-bodied with a rich, complex flavor.", price: 15.75, image: "images/dark2.jpeg", category: coffee_beans, intensity: 10 },
+  { name: "Decaf Kona", description: "Smooth, mild with a slightly sweet flavor and floral aroma.", price: 25.00, image: "images/decaf.jpeg", category: coffee_beans, intensity: 3 },
+  { name: "Espresso Blue Mountain", description: "Mild flavor with no bitterness and a vibrant aroma.", price: 30.00, image: "images/espresso.jpeg", category: coffee_beans, intensity: 8 },
+  { name: "Ethiopian Sidamo", description: "Light body with a nutty flavor and hints of chocolate.", price: 14.00, image: "images/ethiopian.jpeg", category: coffee_beans, intensity: 5 },
+  { name: "French Roast", description: "Medium body with a mild, sweet flavor and floral aroma.", price: 14.75, image: "images/french.jpeg", category: coffee_beans, intensity: 7 },
+  { name: "Guatemala Antigua", description: "Bright acidity with a medium body and wine-like flavor.", price: 16.50, image: "images/guatemalan.jpeg", category: coffee_beans, intensity: 6 },
+  { name: "Mountain Mysore", description: "Full-bodied with a spicy, intense flavor and low acidity.", price: 15.25, image: "images/mountain.jpeg", category: coffee_beans, intensity: 8 },
+  { name: "Yemen Mocha", description: "Complex flavor with chocolate and wine notes.", price: 18.00, image: "images/normal.jpeg", category: coffee_beans, intensity: 7 },
+  { name: "Papua New Guinea", description: "Medium body with a bright, clean taste and fruity notes.", price: 15.50, image: "images/normal1.jpeg", category: coffee_beans, intensity: 6 },
+  { name: "Korean Robusta", description: "Strong, full-bodied with a harsh flavor and high caffeine content.", price: 12.00, image: "images/normal2.jpeg", category: coffee_beans, intensity: 10 },
+  { name: "El Salvador Bourbon", description: "Sweet caramel flavor with a crisp, clean finish.", price: 14.25, image: "images/robusta.jpeg", category: coffee_beans, intensity: 5 },
+  { name: "Single Rwanda Kivu", description: "Bright, clean taste with citrus and floral notes.", price: 16.25, image: "images/single.jpeg", category: coffee_beans, intensity: 4 },
+  { name: "Vietnamese Toraja", description: "Full-bodied with a rich, earthy flavor and low acidity.", price: 16.75, image: "images/vietnamese.jpeg", category: coffee_beans, intensity: 9 },
    { name: "Espresso Machine", description: "Compact and easy to use with a powerful 15-bar pump.", price: 199.99, image: "images/machine1.jpeg", category: coffee_machines },
    { name: "Espresso Machine", description: "Compact and easy to use with a powerful 15-bar pump.", price: 199.99, image: "images/machine2.jpeg", category: coffee_machines },
    { name: "French Press", description: "Classic brewing method for rich, full-bodied coffee.", price: 29.99, image: "images/machine3.jpeg", category: coffee_machines },

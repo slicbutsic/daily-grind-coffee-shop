@@ -1,0 +1,25 @@
+<% if @product.intensity? %>
+  <div class="mb-6 w-full max-w-sm mx-auto">
+    <p class="text-lg font-semibold afacad mb-2">Intensity</p>
+    <div class="flex items-center justify-center">
+      <div class="relative w-20 h-20">
+        <svg class="w-full h-full" viewBox="0 0 36 36">
+          <path d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none" stroke="#E5E7EB" stroke-width="3" />
+          <path d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none" stroke="#257A57" stroke-width="3"
+                stroke-dasharray="<%= @product.intensity * 100 / 10 %>, 100" />
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-2xl font-bold text-[#257A57]">
+            <%= @product.intensity %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
