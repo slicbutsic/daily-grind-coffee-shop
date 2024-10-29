@@ -4,12 +4,13 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
 
+
     if params[:query].present?
       @products = @products.search(params[:query])
     end
 
     respond_to do |format|
-      format.html # This will render the index.html.erb by default
+      format.html
     end
   end
 
