@@ -6,10 +6,14 @@ class Product < ApplicationRecord
   has_many :reviews, dependent: :destroy
 
 
+  validates :second_image, presence: true
   validates :intensity, presence: true,
   numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 },
   if: :coffee?
 
+  def coffee?
+    category.name.downcase == 'coffee beans'
+  end
 
   scope :search, ->(query) {
     where("name ILIKE :query OR description ILIKE :query", query: "%#{query}%")
