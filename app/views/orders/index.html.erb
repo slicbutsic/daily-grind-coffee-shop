@@ -1,9 +1,9 @@
-<div class="container mx-auto px-4 mt-5">
-  <h1 class="text-3xl font-bold mb-6">Your Orders</h1>
+<div class="container mx-auto px-4 mt-9">
+  <h1 class="text-3xl font-bold mb-6 afacad">Your Orders</h1>
 
   <% if @orders.present? %>
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
-      <table class="min-w-full leading-normal">
+      <table class="min-w-full leading-normal afacad">
         <thead>
           <tr>
             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -30,7 +30,7 @@
           <% @orders.each do |order| %>
             <tr>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <%= link_to 'View Details', order_path(order), class: "text-indigo-600 hover:text-indigo900" %>
+                <%= link_to 'View Details', order_path(order), class: "text-[#257A57] hover:text-indigo900" %>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap"><%= order.created_at.strftime("%d %B %Y") %></p>
