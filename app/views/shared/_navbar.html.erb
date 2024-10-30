@@ -4,18 +4,35 @@
       <i class="fas fa-bars fa-lg"></i>
     </button>
 
+<div class="flex items-center ml-auto mr-2 relative" data-controller="mobile-search">
+  <button data-action="click->mobile-search#toggleForm" class="text-white">
+    <i class="fa-solid fa-magnifying-glass"></i> <!-- Search icon -->
+  </button>
 
-<div class="flex items-center justify-end w-full" data-controller="login">
-  <div class="relative">
-    <button data-action="click->login#toggleModal" class="text-white  p-2 rounded-full transition duration-300">
-      <i class="fa-solid fa-user"></i>
+  <!-- Full-screen overlay for the search form -->
+ <div data-mobile-search-target="form" class="hidden fixed inset-0 bg-white z-50 flex items-center justify-center">
+  <div class="w-full max-w-md p-4">
+    <h2 class="text-lg font-semibold mb-10 text-center afacad">What are you looking for?</h2>
+    <%= render 'shared/search_form' %>
+    <button data-action="click->mobile-search#hideForm" class="absolute top-4 right-4 text-gray-600">
+      <i class="fa-solid fa-times"></i> <!-- Close icon -->
     </button>
-    <div class="login-modal-wrapper w-64 absolute right-0 top-full mt-1 afacad">
-      <%= render 'shared/login_modal' %>
-    </div>
   </div>
 </div>
+</div>
 
+   <% if !user_signed_in? %>
+    <div class="flex items-center" data-controller="login">
+      <div class="relative">
+        <button data-action="click->login#toggleModal" class="text-white p-2 rounded-full transition duration-300">
+          <i class="fa-solid fa-user"></i>
+        </button>
+        <div class="login-modal-wrapper w-64 absolute right-0 top-full mt-1 afacad">
+          <%= render 'shared/login_modal' %>
+        </div>
+      </div>
+    </div>
+    <% end %>
 
     <%# mobile cart icon %>
     <div class="relative" id="cart-icon" data-mobile-cart-target="icon">
@@ -23,7 +40,6 @@
           class: "text-white flex items-center p-2 rounded-full transition-colors duration-300",
           data: { action: "click->mobile-cart#toggleDropdown" }
       %>
-
 
       <%# dropdown cart for mobile %>
       <div data-mobile-cart-target="dropdown" class="hidden absolute top-full mt-2 right-0 w-56 bg-white border border-gray-300 rounded-lg shadow-lg z-50">
@@ -67,6 +83,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
 

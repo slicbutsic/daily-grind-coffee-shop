@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 mt-32">
+<div class="container mx-auto px-4 mt-5">
   <h1 class="text-3xl font-bold mb-6">Your Orders</h1>
 
   <% if @orders.present? %>
@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-              Order #
+              Actions
             </th>
             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Date
@@ -22,7 +22,7 @@
               Items
             </th>
             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-              Actions
+              Order #
             </th>
           </tr>
         </thead>
@@ -30,7 +30,7 @@
           <% @orders.each do |order| %>
             <tr>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <p class="text-gray-900 whitespace-no-wrap">#<%= order.id %></p>
+                <%= link_to 'View Details', order_path(order), class: "text-indigo-600 hover:text-indigo900" %>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <p class="text-gray-900 whitespace-no-wrap"><%= order.created_at.strftime("%d %B %Y") %></p>
@@ -48,7 +48,7 @@
                 <p class="text-gray-900 whitespace-no-wrap"><%= order.order_items.sum(:quantity) %></p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <%= link_to 'View Details', order_path(order), class: "text-indigo-600 hover:text-indigo-900" %>
+                <p class="text-gray-900 whitespace-no-wrap">#<%= order.id %></p>
               </td>
             </tr>
           <% end %>
@@ -56,8 +56,8 @@
       </table>
     </div>
   <% else %>
-    <p class="text-gray-600">You haven't placed any orders yet.</p>
+    <p class="text-gray600">You haven't placed any orders yet.</p>
   <% end %>
 
-  <%= link_to 'Back to Products', products_path, class: "mt-6 inline-block bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded" %>
+  <%= link_to 'Back to Products', products_path, class: "mt6 inline-block bg-indigo500 hover:bg-indigo600 text-white font-bold py2 px4 rounded" %>
 </div>

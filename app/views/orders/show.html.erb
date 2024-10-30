@@ -1,4 +1,4 @@
-<div class="container mx-auto mt-32 px-4">
+<div class="container mx-auto mt-5 px-4">
   <h1 class="text-3xl font-bold mb-6">Order Details</h1>
 
   <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -29,6 +29,8 @@
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <%= number_to_currency(@order.total) %>
           </dd>
+
+    
         </div>
       </dl>
     </div>
@@ -40,7 +42,7 @@
     <ul class="divide-y divide-gray-200">
       <% @order.order_items.each do |item| %>
         <li class="px-4 py-4 sm:px-6 flex justify-between items-center">
-          <div>
+          <div class="flex-grow"> <!-- Allow the product name to take available space -->
             <h3 class="text-sm font-medium text-gray-900">
               <%= item.product.name %>
             </h3>
@@ -48,7 +50,7 @@
               Quantity: <%= item.quantity %>
             </p>
           </div>
-          <p class="text-sm font-medium text-gray-900">
+          <p class="text-sm font-medium text-gray-900 whitespace-nowrap"> <!-- Prevent wrapping -->
             <%= number_to_currency(item.price * item.quantity) %>
           </p>
         </li>
@@ -57,5 +59,5 @@
   </div>
 
   <!-- Optional back button to return to the orders list -->
-  <%= link_to 'Back to Orders', orders_path, class: "mt-6 inline-block bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded" %>
+  <%= link_to 'Back to Orders', orders_path, class: "mt-6 inline-block bg-indigo-500 hover:bg-indigo600 text-white font-bold py-2 px-4 rounded" %>
 </div>
