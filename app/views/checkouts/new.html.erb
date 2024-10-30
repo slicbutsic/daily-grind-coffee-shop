@@ -55,5 +55,12 @@
       Pay <%= number_to_currency(@cart.total_price + @shipping_cost) %>
     </button>
 
+
+          <div class="mt-6">
+        <%= link_to "Back to Products", products_path, class: " text-center
+          bg-[#6366F1] py-3 px-7 rounded text-white inline-block transition duration-300 afacad hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)]
+          w-full cursor-pointer
+        " %>
+      </div>
   <% end %>
 </div>
