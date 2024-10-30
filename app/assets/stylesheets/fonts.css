@@ -9,3 +9,21 @@
   font-weight: 600;
   font-style: thin;
 }
+
+
+/* app/assets/stylesheets/application.css */
+.desktop-navbar {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop-navbar {
+    display: none; /* Hide the desktop navbar on small screens */
+  }
+}
+
+@media (min-width: 769px) {
+  #mobile-menu {
+    display: none; /* Hide the mobile menu on larger screens */
+  }
+}

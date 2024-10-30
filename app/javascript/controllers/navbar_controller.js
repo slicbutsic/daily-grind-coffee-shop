@@ -4,10 +4,13 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["categories"]
 
+  connect() {
+  }
+
   showCategories() {
     this.categoriesTarget.style.display = 'block'
     setTimeout(() => {
-      this.categoriesTarget.style.maxHeight = '200px' // Adjust as needed
+      this.categoriesTarget.style.maxHeight = '200px'
     }, 10)
   }
 
@@ -15,7 +18,6 @@ export default class extends Controller {
     this.categoriesTarget.style.maxHeight = '0'
     setTimeout(() => {
       this.categoriesTarget.style.display = 'none'
-    }, 600) // Match this with the CSS transition time
+    }, 600)
   }
 }
-

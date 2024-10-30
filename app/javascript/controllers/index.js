@@ -16,3 +16,9 @@ application.register("stripe-checkout", StripeCheckoutController)
 
 import ShippingController from "./shipping_controller"
 application.register("shipping", ShippingController)
+
+import HamburgerController from "./hamburger_controller";
+application.register("hamburger", HamburgerController);
+
+import MobileCartController from "./mobile_cart_controller";
+application.register("mobile-cart", MobileCartController);
