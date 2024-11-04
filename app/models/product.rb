@@ -22,4 +22,9 @@ class Product < ApplicationRecord
     reviews.average(:rating).to_f.round(1)
   end
 
+  def self.coffees_of_the_month(limit = 4)
+    coffee_beans = Category.find_by(name: "Coffee Beans")
+    where(category: coffee_beans).order("RANDOM()").limit(limit)
+  end
+
 end
