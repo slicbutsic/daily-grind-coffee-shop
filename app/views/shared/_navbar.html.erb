@@ -1,8 +1,10 @@
 <div class="mobile-menu" data-controller="mobile-cart">
   <div class="bg-black h-9 flex items-center justify-between px-5">
+  <% if user_signed_in? %>
     <button id="hamburger" data-controller="hamburger" class="md:hidden text-white" data-action="click->hamburger#toggleSideBar">
       <i class="fas fa-bars fa-lg"></i>
     </button>
+  <% end %>
     <div class="ml-4">
       <%= link_to "DAILY GRIND ", root_path, class: "text-md text-white afacad" %>
     </div>
@@ -96,6 +98,7 @@
         <%= link_to 'Wishlist', wishlist_path, class: "mt-2 block hover:text-black transition duration-300 text-gray-400 afacad" %>
         <%= link_to 'Orders', orders_path, class: "mt-2 block hover:text-black transition duration-300 text-gray-400 afacad" %>
         <%= link_to 'Edit Profile', edit_user_registration_path, class: "mt-2 block hover:text-black transition duration-300 text-gray-400 afacad" %>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "mt-4 w-full text-center hover:text-black transition duration-300 text-gray-400 afacad" %>
       <% else %>
         <%= link_to 'Login', new_user_session_path, class: 'block hover:text-black transition duration-300 text-gray-400 afacad' %>
       <% end %>
