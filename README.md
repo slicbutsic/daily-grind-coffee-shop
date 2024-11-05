@@ -32,9 +32,10 @@ Make sure you have the following installed:
 ### Installation Steps
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/slicbutsic/daily-grind.git
+   git clone https://github.com/slicbutsic/daily-grind-coffee-shop.git
    cd daily-grind
 2. **Start Database & Server**:
+   ```bash
    rails db:create
    rails db:migrate
    rails db:seed
