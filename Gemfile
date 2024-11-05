@@ -82,3 +82,4 @@ end
 gem 'devise'
 gem 'stripe'
 
+gem 'ffi', '< 1.17'
