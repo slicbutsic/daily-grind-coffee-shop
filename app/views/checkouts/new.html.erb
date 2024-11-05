@@ -1,66 +1,61 @@
 <%= javascript_include_tag "https://js.stripe.com/v3/", "data-turbo-track": "reload" %>
 
-<div class="container mx-auto mt-32 px-4"
+<div class="container mx-auto mt-16 px-4 max-w-3xl afacad"
      data-controller="stripe-checkout"
      data-stripe-checkout-publishable-key-value="<%= Rails.configuration.stripe[:publishable_key] %>"
      data-stripe-checkout-client-secret-value="<%= @client_secret %>">
-  <h1 class="text-2xl font-bold mb-6">Checkout</h1>
+  <h1 class="text-3xl font-bold mb-8 text-center">Checkout</h1>
 
-  <%= form_for @checkout, url: checkouts_path, html: { id: 'payment-form', class: 'space-y-4', data: { stripe_checkout_target: "form", action: "submit->stripe-checkout#submitForm" } } do |f| %>
+  <%= form_for @checkout, url: checkouts_path, html: { id: 'payment-form', class: 'space-y-6', data: { stripe_checkout_target: "form", action: "submit->stripe-checkout#submitForm" } } do |f| %>
 
     <% if flash[:error].present? %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+        <p class="font-bold">Error</p>
         <p><%= flash[:error] %></p>
       </div>
     <% end %>
 
-<div>
-  <h2 class="text-xl font-semibold mb-2">Order Summary</h2>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4">Order Summary</h2>
 
-  <% @cart.cart_items.each do |item| %>
-    <div class="flex justify-between items-center mb-2">
-      <span><%= item.product.name %> x <%= item.quantity %></span>
-      <span><%= number_to_currency(item.product.price * item.quantity) %></span>
-    </div>
-  <% end %>
+      <% @cart.cart_items.each do |item| %>
+        <div class="flex justify-between items-center mb-2 text-gray-700">
+          <span><%= item.product.name %> x <%= item.quantity %></span>
+          <span class="font-medium"><%= number_to_currency(item.product.price * item.quantity) %></span>
+        </div>
+      <% end %>
 
-  <div class="flex justify-between items-center mb-2  text-lg">
-    <span>Shipping:</span>
-    <span><%= number_to_currency(@shipping_cost) %></span>
-  </div>
-
-  <div class="flex justify-between items-center font-bold text-xl mt-2 border-t pt-2">
-    <span>Total:</span>
-    <span><%= number_to_currency(@cart.total_price + @shipping_cost) %></span>
-  </div>
-</div>
-
-    <!-- Cardholder Name -->
-    <div>
-      <label for="card-holder-name" class="block text-sm font-medium text-gray-700">Cardholder Name</label>
-      <input type="text" id="card-holder-name" data-stripe-checkout-target="nameInput" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-    </div>
-
-    <!-- Card Details -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Card Details</label>
-      <div data-stripe-checkout-target="cardElement" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" style="min-height: 35px;"></div>
-    </div>
-
-    <!-- Error Message -->
-    <div data-stripe-checkout-target="cardErrors" role="alert" class="text-red-600" aria-live="assertive"></div>
-
-    <!-- Submit Button -->
-    <button data-stripe-checkout-target="submitButton" type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Pay <%= number_to_currency(@cart.total_price + @shipping_cost) %>
-    </button>
-
-
-          <div class="mt-6">
-        <%= link_to "Back to Products", products_path, class: " text-center
-          bg-[#6366F1] py-3 px-7 rounded text-white inline-block transition duration-300 afacad hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)]
-          w-full cursor-pointer
-        " %>
+      <div class="flex justify-between items-center mb-2 text-gray-700 text-lg mt-4 pt-4 border-t">
+        <span>Shipping:</span>
+        <span class="font-medium"><%= number_to_currency(@shipping_cost) %></span>
       </div>
+
+      <div class="flex justify-between items-center font-bold text-xl mt-4 pt-4 border-t border-gray-300">
+        <span>Total:</span>
+        <span><%= number_to_currency(@cart.total_price + @shipping_cost) %></span>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="mb-4">
+        <label for="card-holder-name" class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
+        <input type="text" id="card-holder-name" data-stripe-checkout-target="nameInput" required class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Card Details</label>
+        <div data-stripe-checkout-target="cardElement" class="w-full border border-gray-300 rounded-md shadow-sm p-3" style="min-height: 40px;"></div>
+      </div>
+
+      <div data-stripe-checkout-target="cardErrors" role="alert" class="text-red-600 text-sm mb-4" aria-live="assertive"></div>
+
+      <button data-stripe-checkout-target="submitButton" type="submit" class="w-full bg-[#257A57] text-white py-3 px-4 rounded-md hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+        Pay <%= number_to_currency(@cart.total_price + @shipping_cost) %>
+      </button>
+    </div>
+
+    <div class="mt-6">
+      <%= link_to "Back to Products", products_path, class: "block w-full text-center bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-150 ease-in-out" %>
+    </div>
   <% end %>
 </div>
