@@ -6,34 +6,35 @@ export default class extends Controller {
   connect() {
     console.log("Mobile Search controller connected");
     document.addEventListener('click', this.handleOutsideClick.bind(this));
-    window.addEventListener('resize', this.hideForm.bind(this)); // Add resize event listener
+    window.addEventListener('resize', this.hideForm.bind(this));
   }
 
   disconnect() {
     document.removeEventListener('click', this.handleOutsideClick.bind(this));
-    window.removeEventListener('resize', this.hideForm.bind(this)); // Remove resize event listener
+    window.removeEventListener('resize', this.hideForm.bind(this)); 
   }
 
   toggleForm(event) {
-    event.stopPropagation(); // Prevent click from bubbling up
-    this.formTarget.classList.toggle("hidden"); // Toggle the hidden class
+    event.stopPropagation();
+    this.formTarget.classList.toggle("hidden");
 
-    // If the form is shown, focus on the input field
+
     if (!this.formTarget.classList.contains("hidden")) {
       const input = this.formTarget.querySelector('input');
       if (input) {
-        input.focus(); // Focus on the input field when shown
+        input.focus();
       }
     }
   }
 
   handleOutsideClick(event) {
     if (!this.element.contains(event.target) && !this.formTarget.classList.contains("hidden")) {
-      this.hideForm(); // Hide the form if clicking outside
+      this.hideForm();
     }
   }
 
   hideForm() {
-    this.formTarget.classList.add("hidden"); // Hide the form
+    this.formTarget.classList.add("hidden");
   }
+
 }

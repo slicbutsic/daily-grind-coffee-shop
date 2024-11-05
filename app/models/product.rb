@@ -3,7 +3,7 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :wishlist_items, dependent: :destroy
   has_many :wishlists, through: :wishlist_items
-  has_many :reviews, dependent: :destroy
+  # has_many :reviews, dependent: :destroy
 
 
   validates :second_image, presence: true
@@ -18,9 +18,9 @@ class Product < ApplicationRecord
   scope :search, ->(query) {
     where("name ILIKE :query OR description ILIKE :query", query: "%#{query}%")
   }
-  def average_rating
-    reviews.average(:rating).to_f.round(1)
-  end
+  # def average_rating
+  #   reviews.average(:rating).to_f.round(1)
+  # end
 
   def self.coffees_of_the_month(limit = 4)
     coffee_beans = Category.find_by(name: "Coffee Beans")

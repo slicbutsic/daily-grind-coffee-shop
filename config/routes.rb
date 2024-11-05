@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
 
   resources :products, only: %i[index show] do
-    resources :reviews, only: [:create]
+    # resources :reviews, only: [:create]
   end
 
   resource :cart, only: [:show] do
