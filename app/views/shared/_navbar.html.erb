@@ -92,6 +92,11 @@
 
   <!-- Mobile sidebar -->
   <div id="mobile-menu" data-controller="hamburger" class="fixed top-0 left-0 h-full w-52 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden">
+    <div class="p-4 text-right">
+      <button data-action="click->hamburger#closeMenu" class="text-gray-500 hover:text-black">
+        x
+      </button>
+    </div>
     <div class="p-4 text-center mt-24">
       <% if user_signed_in? %>
         <%= link_to 'Products', products_path, class: 'block hover:text-black transition duration-300 text-gray-400 afacad' %>
