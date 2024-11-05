@@ -1,0 +1,26 @@
+<div class="mt-8 sm:mt-12 md:mt-16 relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8"
+     data-controller="carousel"
+     data-action="mouseenter->carousel#mouseEnter mouseleave->carousel#mouseLeave">
+  <div class="overflow-hidden shadow-lg">
+    <% ["dash1.jpg", "dash2.jpg", "dash3.jpg"].each do |image| %>
+      <% full_image_path = "/images/#{image}" %>
+      <%= image_tag full_image_path,
+          class: "w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px] object-cover transition-opacity duration-300 ease-in-out",
+          data: { carousel_target: "slide" } %>
+    <% end %>
+  </div>
+
+  <button data-action="carousel#previous"
+          class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 focus:outline-none transition-all duration-200 ease-in-out">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <button data-action="carousel#next"
+          class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 focus:outline-none transition-all duration-200 ease-in-out">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+</div>

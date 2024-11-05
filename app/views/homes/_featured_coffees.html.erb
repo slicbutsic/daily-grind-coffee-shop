@@ -1,0 +1,17 @@
+<section class="py-8 sm:py-10 md:py-12 bg-gray-100">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <h2 class="text-2xl sm:text-3xl md:text-3xl lg:text-3xl font-bold mb-4 sm:mb-6 md:mb-8 text-center afacad">
+      <span class="block sm:inline">Featured</span>
+      <span class="block sm:inline sm:ml-2">Coffees</span>
+    </h2>
+    <div class="flex justify-center">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-4 md:gap-6 w-full sm:w-auto">
+        <% Product.coffees_of_the_month.each do |product| %>
+          <div class="w-full max-w-sm mx-auto">
+            <%= render 'products/product_index_card', product: product %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
