@@ -1,12 +1,11 @@
-  <!-- Category Dropdown -->
-  <div data-controller="category-dropdown" class="relative">
-    <button data-action="click->category-dropdown#toggle" class=" hover:bg-white hover:text-black px-2 py-1 rounded transition duration-300">
-      Categories
-    </button>
-    <div data-category-dropdown-target="menu" style="display: none; position: absolute; background-color: white; z-index: 100;" class="mt-2 shadow-lg rounded-md">
-      <%= link_to "All", products_path, class: "block px-4 py-2 text-black hover:bg-gray-100 transition duration-300" %>
-      <% @categories.each do |category| %>
-        <%= link_to category.name, products_path(category_id: category.id), class: "block px-4 py-2 text-black hover:bg-gray-200 transition duration-300" %>
-      <% end %>
-    </div>
+<div data-controller="category-dropdown" class="relative">
+  <button data-action="click->category-dropdown#toggle" class="hover:bg-white hover:text-black px-2 py-1 rounded transition duration-300">
+    Categories
+  </button>
+  <div data-category-dropdown-target="menu" style="display: none; position: absolute; background-color: white; z-index: 100;" class="mt-2 shadow-lg rounded-md">
+    <%= link_to "All", products_path, class: "block px-4 py-2 text-black hover:bg-gray-100 transition duration-300" %>
+    <% @categories.each do |category| %>
+      <%= link_to category.name, products_path(category_id: category.id), class: "block px-4 py-2 text-black hover:bg-gray-200 transition duration-300" %>
+    <% end %>
   </div>
+</div>
