@@ -9,6 +9,7 @@ class CheckoutsController < ApplicationController
     @checkout = Checkout.new(cart: @cart, shipping_cost: @shipping_cost)
     @client_secret = @checkout.create_payment_intent
     Rails.logger.debug "Client Secret: #{@client_secret}"
+    @stripe_publishable_key = ENV['STRIPE_PUBLISHABLE_KEY']
   end
 
   def create
