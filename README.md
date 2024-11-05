@@ -5,7 +5,7 @@ Welcome to the **Daily Grind** coffee e-commerce website! This application allow
 
 ## Features
 - **User Authentication**: Users can sign up, log in, and manage their profiles.
-- **Product Catalog**: Browse a wide selection of coffee products.
+- **Product Catalog**: Browse a wide selection of coffee, coffee machines and mugs.
 - **Wishlist**: Save favorite products for later purchase.
 - **Order Management**: View past orders and track current orders.
 - **Shopping Cart**: Add products to a cart for easy checkout and manage quantities before purchasing.
