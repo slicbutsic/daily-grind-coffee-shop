@@ -1,24 +1,48 @@
-<h2>Log in</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+<div class="min-h-screen bg-black flex items-center justify-center px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-14 mb-14">
+    <div class="p-8">
+      <h2 class="text-3xl font-bold mb-6 text-center text-gray-800 afacad-bold">Log in</h2>
+
+      <p class="mb-12 text-center text-gray-600 afacad text-xl">
+        Welcome back! Please enter your credentials to access your account.
+      </p>
+
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= f.error_notification class: "mb-4 text-red-500" %>
+
+        <div class="space-y-6 afacad text-xl">
+          <div class="flex items-center">
+            <%= f.label :email, "Email *", class: 'w-1/3 text-left text-gray-700' %>
+            <div class="w-2/3 flex justify-center">
+              <%= f.input :email, required: true, autofocus: true, label: false, wrapper_html: { class: 'w-4/5' }, input_html: { autocomplete: "email", class: 'w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' } %>
+            </div>
+          </div>
+
+          <div class="flex items-center">
+            <%= f.label :password, "Password *", class: 'w-1/3 text-left text-gray-700' %>
+            <div class="w-2/3 flex justify-center">
+              <%= f.input :password, required: true, label: false, wrapper_html: { class: 'w-4/5' }, input_html: { autocomplete: "current-password", class: 'w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' } %>
+            </div>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="flex items-center justify-end">
+              <div class="w-2/3 flex justify-start">
+                <%= f.input :remember_me, as: :boolean, label: 'Remember me', label_html: { class: 'ml-2 text-gray-700' }, input_html: { class: 'rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' } %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+          <%= f.button :submit, "LOG IN", class: 'bg-[#257A57] py-3 px-16 rounded text-white inline-block transition duration-300 afacad hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)]' %>
+        </div>
+      <% end %>
+
+      <div class="mt-6 text-center">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
-
-
-
-<%# add: Title (ie:mr, mrs, miss, ms, dr, no Title), first name, Last name %>
+</div>

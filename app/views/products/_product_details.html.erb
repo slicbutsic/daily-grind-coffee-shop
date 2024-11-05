@@ -13,11 +13,7 @@
       <%= render partial: 'intensity', locals: { product: @product } %>
 
       <div class="space-y-4 w-full max-w-xs">
-        <% if user_signed_in? %>
-          <%= button_to 'Update Basket', add_item_cart_path(product_id: @product.id), method: :post, class: 'bg-[#257A57] py-3 px-7 rounded-full text-white inline-block transition duration-300 afacad hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)] w-full' %>
-        <% else %>
-          <p class="text-gray-500 afacad mb-4">You need to log in to add items to your cart.</p>
-        <% end %>
+        <%= button_to 'Update Basket', add_item_cart_path(product_id: @product.id), method: :post, class: 'bg-[#257A57] py-3 px-7 rounded-full text-white inline-block transition duration-300 afacad hover:shadow-[0_8px_10px_-3px_rgba(0,0,0,0.3)] w-full' %>
       </div>
     </div>
   </div>
