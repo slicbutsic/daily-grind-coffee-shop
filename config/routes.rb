@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  get 'reviews/create'
+  # get 'reviews/create'
   devise_for :users
   # root to: 'products#index'
   root to: 'homes#index'
+
+  get '/coffee_quiz', to: 'quizzes#new'
+  post '/coffee_quiz', to: 'quizzes#result'
 
   resources :categories, only: [:index, :show]
 
