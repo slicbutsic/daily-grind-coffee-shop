@@ -3,8 +3,7 @@
      data-action="mouseenter->carousel#mouseEnter mouseleave->carousel#mouseLeave">
   <div class="overflow-hidden shadow-lg">
     <% ["dash1.jpg", "dash2.jpg", "dash3.jpg"].each do |image| %>
-      <% full_image_path = "/images/#{image}" %>
-      <%= image_tag full_image_path,
+      <%= image_tag asset_path(image),
           class: "w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px] object-cover transition-opacity duration-300 ease-in-out",
           data: { carousel_target: "slide" } %>
     <% end %>
